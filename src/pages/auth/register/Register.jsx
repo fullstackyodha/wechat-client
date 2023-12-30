@@ -1,10 +1,11 @@
-import Button from "../../../components/button/Button";
-import Input from "../../../components/input/Input";
-import { authService } from "../../../services/api/auth/auth.service";
-import { Utils } from "../../../services/utils/utils.service";
-import "./Register.scss";
-
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Button from "@/components/button/Button";
+import Input from "@/components/input/Input";
+import { Utils } from "@/services/utils/utils.service";
+import { authService } from "@/services/api/auth/auth.service";
+import "./Register.scss";
 
 function Register() {
     const [username, setUsername] = useState("");
@@ -15,6 +16,8 @@ function Register() {
     const [alertType, setAlertType] = useState("");
     const [hasError, setHasError] = useState(false);
     const [user, setUser] = useState("");
+
+    const navigate = useNavigate();
 
     const registerUser = async (event) => {
         setLoading(true);
@@ -44,7 +47,11 @@ function Register() {
 
             // DISPATCH USERS TO REDUX
 
-            setUser(response?.data?.user);
+            setLoading(false);
+            setUsername("");
+            setEmail("");
+            setPassword("");
+            setUser(response?.data?.data);
             setHasError(false);
             setAlertType("alert-success");
         } catch (error) {
@@ -62,10 +69,9 @@ function Register() {
         }
 
         if (user) {
-            console.log("NAVIGATE TO STREAMS PAGE");
-            setLoading(false);
+            navigate("/app/social/streams");
         }
-    }, [loading, user]);
+    }, [loading, user, navigate]);
 
     return (
         <>

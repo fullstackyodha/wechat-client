@@ -1,10 +1,10 @@
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import Button from "../../../components/button/Button";
-import Input from "../../../components/input/Input";
-import { authService } from "../../../services/api/auth/auth.service";
+import Button from "@/components/button/Button";
+import Input from "@/components/input/Input";
+import { authService } from "@/services/api/auth/auth.service";
 import "./Login.scss";
 
 function Login() {
@@ -16,6 +16,9 @@ function Login() {
     const [hasError, setHasError] = useState(false);
     const [alertType, setAlertType] = useState("");
     const [user, setUser] = useState("");
+
+    // Returns an imperative method for changing the location.
+    const navigate = useNavigate();
 
     async function loginUser(e) {
         setLoading(true);
@@ -35,7 +38,10 @@ function Login() {
 
             // DISPATCH USERS TO REDUX
 
-            setUser(response?.data?.user);
+            setLoading(false);
+            setUsername("");
+            setPassword("");
+            setUser(response?.data?.data);
             setLoggedIn(loggedIn);
             setHasError(false);
             setAlertType("alert-success");
@@ -53,10 +59,9 @@ function Login() {
         }
 
         if (user) {
-            console.log("NAVIGATE TO STREAMS PAGE");
-            setLoading(false);
+            navigate("/app/social/streams");
         }
-    }, [loading, user]);
+    }, [loading, user, navigate]);
 
     return (
         <>

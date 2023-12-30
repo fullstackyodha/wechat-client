@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import backgroundImg from "../../../assets/images/background.jpg";
-import { Login, Register } from "../index";
+import backgroundImg from "@/assets/images/background.jpg";
+import { Login, Register } from "@/pages/auth";
 
 import "./AuthTabs.scss";
 

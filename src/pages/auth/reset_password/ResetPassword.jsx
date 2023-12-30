@@ -2,10 +2,10 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
-import Button from "../../../components/button/Button";
-import Input from "../../../components/input/Input";
-import backgroundImg from "../../../assets/images/background.jpg";
-import { authService } from "../../../services/api/auth/auth.service";
+import Input from "@/components/input/Input";
+import Button from "@/components/button/Button";
+import backgroundImg from "@/assets/images/background.jpg";
+import { authService } from "@/services/api/auth/auth.service";
 
 import "./ResetPassword.scss";
 

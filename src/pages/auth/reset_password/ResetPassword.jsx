@@ -1,16 +1,50 @@
 import { FaArrowLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import backgroundImg from "../../../assets/images/background.jpg";
+import { authService } from "../../../services/api/auth/auth.service";
 
 import "./ResetPassword.scss";
 
 function ResetPassword() {
-    const responseMessage = "",
-        password = "",
-        confirmPassword = "";
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [responseMessage, setResponseMessage] = useState("");
+    const [alertType, setAlertType] = useState("");
+    const [user, setUser] = useState("");
+
+    const [searchParams] = useSearchParams();
+
+    async function resetPassword(e) {
+        setLoading(true);
+        e.preventDefault();
+
+        try {
+            const response = await authService.resetPassword(
+                {
+                    password,
+                    confirmPassword
+                },
+                searchParams.get("token")
+            );
+
+            setPassword("");
+            setConfirmPassword("");
+            setLoading(false);
+            setShowAlert(false);
+            setAlertType("alert-success");
+            setResponseMessage(response?.data?.message);
+        } catch (error) {
+            setLoading(false);
+            setShowAlert(true);
+            setAlertType("alert-error");
+            setResponseMessage(error?.response?.data?.message);
+        }
+    }
 
     return (
         <div
@@ -30,13 +64,19 @@ function ResetPassword() {
                                 <div className="login reset-password">Reset Password</div>
                             </li>
                         </ul>
+
                         <div className="tab-item">
                             <div className="auth-inner">
-                                {/* <div className="alerts" role="alert">
-                                    Error message
-                                </div> */}
+                                {responseMessage && (
+                                    <div className={`alerts ${alertType}`} role="alert">
+                                        {responseMessage}
+                                    </div>
+                                )}
 
-                                <form className="reset-password-form">
+                                <form
+                                    className="reset-password-form"
+                                    onSubmit={resetPassword}
+                                >
                                     <div className="form-input-container">
                                         <Input
                                             id="password"
@@ -45,29 +85,39 @@ function ResetPassword() {
                                             value={password}
                                             labelText="New Password"
                                             placeholder="New Password"
-                                            handleChange={() => {}}
+                                            handleChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
                                         />
+
                                         <Input
-                                            id="cpassword"
-                                            name="cpassword"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
                                             type="password"
                                             value={confirmPassword}
                                             labelText="Confirm Password"
                                             placeholder="Confirm Password"
-                                            handleChange={() => {}}
+                                            handleChange={(e) =>
+                                                setConfirmPassword(e.target.value)
+                                            }
                                         />
                                     </div>
+
                                     <Button
-                                        label="RESET PASSWORD"
+                                        label={`${
+                                            loading
+                                                ? "RESETING PASSWORD..."
+                                                : "RESET PASSWORD"
+                                        }`}
                                         className="auth-button button"
-                                        disabled={false}
+                                        disabled={
+                                            loading || !password || !confirmPassword
+                                        }
                                     />
 
-                                    <Link to={"/"}>
-                                        <span className="login">
-                                            <FaArrowLeft className="arrow-left" />
-                                            Login
-                                        </span>
+                                    <Link to={"/"} className="login">
+                                        <FaArrowLeft className="arrow-left" />
+                                        Login
                                     </Link>
                                 </form>
                             </div>

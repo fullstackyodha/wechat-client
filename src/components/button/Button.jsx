@@ -5,7 +5,7 @@ function Button(props) {
 
     return (
         <>
-            <button className={className} disbabled={disabled} onClick={handleClick}>
+            <button className={className} disabled={disabled} onClick={handleClick}>
                 {label}
             </button>
         </>

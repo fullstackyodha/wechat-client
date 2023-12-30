@@ -1,13 +1,15 @@
 import blessed from "../../assets/feelings/blessed.jpg";
 import excited from "../../assets/feelings/excited.jpg";
-import happy from "../../assets/feelings/happy.jpg";
+import happyFeelings from "../../assets/feelings/happy.jpg";
 import loved from "../../assets/feelings/loved.jpg";
+
 import angry from "../../assets/reactions/angry.png";
-import haha from "../../assets/reactions/haha.png";
 import like from "../../assets/reactions/like.png";
 import love from "../../assets/reactions/love.png";
 import sad from "../../assets/reactions/sad.png";
 import wow from "../../assets/reactions/wow.png";
+import happy from "../../assets/reactions/happy.png";
+
 import {
     FaBirthdayCake,
     FaComments,
@@ -80,7 +82,7 @@ export const feelingsList = [
     {
         index: 0,
         name: "happy",
-        image: happy
+        image: happyFeelings
     },
     {
         index: 1,
@@ -100,32 +102,32 @@ export const feelingsList = [
 ];
 
 export const fontAwesomeIcons = {
-    FaNewspaper: <FaNewspaper className="icon" />,
-    FaComments: <FaComments className="icon" />,
-    FaUsers: <FaUsers className="icon" />,
-    FaUserPlus: <FaUserPlus className="icon" />,
-    FaHeart: <FaHeart className="icon" />,
-    FaImages: <FaImages className="icon" />,
-    FaRegBell: <FaRegBell className="icon" />,
-    FaBirthdayCake: <FaBirthdayCake className="icon" />,
-    FaRegUser: <FaRegUser className="icon" />
+    FaNewspaper: { iconName: "FaNewspaper", className: "icon" },
+    FaComments: { iconName: "FaComments", className: "icon" },
+    FaUsers: { iconName: "FaUsers", className: "icon" },
+    FaUserPlus: { iconName: "FaUserPlus", className: "icon" },
+    FaHeart: { iconName: "FaHeart", className: "icon" },
+    FaImages: { iconName: "FaImages", className: "icon" },
+    FaRegBell: { iconName: "FaRegBell", className: "icon" },
+    FaBirthdayCake: { iconName: "FaBirthdayCake", className: "icon" },
+    FaRegUser: { iconName: "FaNewspaper", className: "icon" }
 };
 
 export const privacyList = [
     {
         topText: "Public",
         subText: "Anyone on SocialApp",
-        icon: <FaGlobe className="globe-icon globe" />
+        icon: { iconName: "FaGlobe", className: "globe-icon globe" }
     },
     {
         topText: "Followers",
         subText: "Your followers on SocialApp",
-        icon: <FaUserCheck className="globe-icon globe" />
+        icon: { iconName: "FaUserCheck", className: "globe-icon globe" }
     },
     {
         topText: "Private",
         subText: "For you only",
-        icon: <FaLock className="globe-icon globe" />
+        icon: { iconName: "FaLock", className: "globe-icon globe" }
     }
 ];
 
@@ -197,7 +199,7 @@ export const reactionsMap = {
     love,
     wow,
     sad,
-    haha,
+    happy,
     angry
 };
 
@@ -205,7 +207,7 @@ export const reactionsColor = {
     like: "#50b5ff",
     love: "#f33e58",
     angry: "#e9710f",
-    haha: "#f7b124",
+    happy: "#f7b124",
     sad: "#f7b124",
     wow: "#f7b124"
 };
@@ -246,27 +248,27 @@ export const tabItems = (showPassword, showNotification) => {
         {
             key: "Timeline",
             show: true,
-            icon: <FaUser className="banner-nav-item-name-icon" />
+            icon: { iconName: "FaUser", className: "banner-nav-item-name-icon" }
         },
         {
             key: "Followers",
             show: true,
-            icon: <FaHeart className="banner-nav-item-name-icon" />
+            icon: { iconName: "FaHeart", className: "banner-nav-item-name-icon" }
         },
         {
             key: "Gallery",
             show: true,
-            icon: <FaImages className="banner-nav-item-name-icon" />
+            icon: { iconName: "FaImages", className: "banner-nav-item-name-icon" }
         },
         {
             key: "Change Password",
             show: showPassword,
-            icon: <FaKey className="banner-nav-item-name-icon" />
+            icon: { iconName: "FaKey", className: "banner-nav-item-name-icon" }
         },
         {
             key: "Notifications",
             show: showNotification,
-            icon: <FaRegBell className="banner-nav-item-name-icon" />
+            icon: { iconName: "FaRegBell", className: "banner-nav-item-name-icon" }
         }
     ];
     return items;

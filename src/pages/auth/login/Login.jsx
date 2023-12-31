@@ -1,10 +1,14 @@
 import { FaArrowRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
 import { authService } from "@/services/api/auth/auth.service";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { Utils } from "@/services/utils/utils.service";
+import { useSessionStorage } from "@/hooks/useSessionStorage";
 import "./Login.scss";
 
 function Login() {
@@ -22,6 +26,9 @@ function Login() {
 
     const [setStoredUsername] = useLocalStorage("username", "set");
     const [setLoggedIn] = useLocalStorage("keepLoggedIn", "set");
+    const [pageReload] = useSessionStorage("pageReload", "set");
+
+    const dispatch = useDispatch();
 
     async function loginUser(e) {
         setLoading(true);
@@ -37,11 +44,12 @@ function Login() {
 
             // SET LOGGED IN TO TRUE IN LOCAL STORAGE
             setLoggedIn(keepLoggedIn);
-            setStoredUsername(username);
 
             // SET USERNAME IN LOCAL STORAGE
+            setStoredUsername(username);
 
             // DISPATCH USERS TO REDUX
+            Utils.dispatchUser(response?.data?.data, pageReload, dispatch, setUser);
 
             setLoading(false);
             setUsername("");

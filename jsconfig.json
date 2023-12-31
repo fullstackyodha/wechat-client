@@ -8,7 +8,7 @@
             "@components/*": ["src/components/*"],
             "@hooks/*": ["src/hooks/*"],
             "@mocks/*": ["src/mocks/*"],
-            "@redux/*": ["src/redux-toolkit/*"],
+            "@redux/*": ["src/redux_toolkit/*"],
             "@services/*": ["src/services/*"]
         }
     }

@@ -11,11 +11,18 @@ const userSlice = createSlice({
             const { token, profile } = action.payload;
             state.token = token;
             state.profile = profile;
+        },
+        updateUserProfile: (state, action) => {
+            state.profile = action.payload;
+        },
+        clearUser: (state, action) => {
+            state.token = "";
+            state.profile = null;
         }
     }
 });
 
 // ACTION
-export const { addUser } = userSlice.actions;
+export const { addUser, updateUserProfile, clearUser } = userSlice.actions;
 // REDUCERS
 export default userSlice.reducer;

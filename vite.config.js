@@ -16,7 +16,7 @@ export default defineConfig({
             "@hooks": "./src/hooks/*",
             "@pages": "./src/pages/*",
             "@mocks": "./src/mocks/*",
-            "@redux": "./src/redux-toolkit/*",
+            "@redux": "./src/redux_toolkit/*",
             "@services": "./src/services/*"
         }
     }

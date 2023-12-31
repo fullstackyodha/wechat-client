@@ -5,8 +5,8 @@ import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
 import { Utils } from "@/services/utils/utils.service";
 import { authService } from "@/services/api/auth/auth.service";
-import "./Register.scss";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import "./Register.scss";
 
 function Register() {
     const [username, setUsername] = useState("");

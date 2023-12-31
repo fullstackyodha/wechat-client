@@ -10,7 +10,7 @@ import "./Login.scss";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [keepLoggedIn, setKeepLoggedIn] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [hasError, setHasError] = useState(false);
@@ -19,6 +19,9 @@ function Login() {
 
     // Returns an imperative method for changing the location.
     const navigate = useNavigate();
+
+    const [setStoredUsername] = useLocalStorage("username", "set");
+    const [setLoggedIn] = useLocalStorage("keepLoggedIn", "set");
 
     async function loginUser(e) {
         setLoading(true);
@@ -33,6 +36,8 @@ function Login() {
             console.log(response.data.data);
 
             // SET LOGGED IN TO TRUE IN LOCAL STORAGE
+            setLoggedIn(keepLoggedIn);
+            setStoredUsername(username);
 
             // SET USERNAME IN LOCAL STORAGE
 
@@ -42,7 +47,6 @@ function Login() {
             setUsername("");
             setPassword("");
             setUser(response?.data?.data);
-            setLoggedIn(loggedIn);
             setHasError(false);
             setAlertType("alert-success");
         } catch (error) {
@@ -109,8 +113,8 @@ function Login() {
                                 id="checkbox"
                                 type="checkbox"
                                 name="checkbox"
-                                value={loggedIn}
-                                handleChange={() => setLoggedIn((state) => !state)}
+                                value={keepLoggedIn}
+                                handleChange={() => setKeepLoggedIn((state) => !state)}
                             />
                             Keep me logged in
                         </label>

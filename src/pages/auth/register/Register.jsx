@@ -6,6 +6,7 @@ import Input from "@/components/input/Input";
 import { Utils } from "@/services/utils/utils.service";
 import { authService } from "@/services/api/auth/auth.service";
 import "./Register.scss";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 function Register() {
     const [username, setUsername] = useState("");
@@ -18,6 +19,8 @@ function Register() {
     const [user, setUser] = useState("");
 
     const navigate = useNavigate();
+    const [setStoredUsername] = useLocalStorage("username", "set");
+    const [setLoggedIn] = useLocalStorage("keepLoggedIn", "set");
 
     const registerUser = async (event) => {
         setLoading(true);
@@ -42,6 +45,8 @@ function Register() {
             console.log(response);
 
             // SET REGISTERED USER TO TRUE IN LOCAL STORAGE
+            setLoggedIn(true);
+            setStoredUsername(username);
 
             // SET USERNAME IN LOCAL STORAGE
 

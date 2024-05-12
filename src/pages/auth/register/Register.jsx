@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
 import { Utils } from "@/services/utils/utils.service";
@@ -85,7 +84,7 @@ function Register() {
     }, [loading, user, navigate]);
 
     return (
-        <>
+        <div>
             <div className="auth-inner">
                 {hasError && errorMessage && (
                     <div className={`alerts ${alertType}`} role="alert">
@@ -149,7 +148,7 @@ function Register() {
                     />
                 </form>
             </div>
-        </>
+        </div>
     );
 }
 

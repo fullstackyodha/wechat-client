@@ -1,3 +1,6 @@
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import jsconfigPaths from "vite-jsconfig-paths";
@@ -19,5 +22,11 @@ export default defineConfig({
             "@redux": "./src/redux_toolkit/*",
             "@services": "./src/services/*"
         }
+    },
+    test: {
+        environment: "jsdom",
+        // hey! 👋 over here
+        globals: true,
+        setupFiles: "./src/setupTest.js"
     }
 });

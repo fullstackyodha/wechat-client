@@ -15,6 +15,7 @@ function ResetPassword() {
     const [loading, setLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState("");
     const [alertType, setAlertType] = useState("");
+    const [showAlert, setShowAlert] = useState("");
     const [user, setUser] = useState("");
 
     const [searchParams] = useSearchParams();
@@ -84,6 +85,9 @@ function ResetPassword() {
                                             type="password"
                                             value={password}
                                             labelText="New Password"
+                                            style={{
+                                                border: showAlert && "1px solid #fa9b8a"
+                                            }}
                                             placeholder="New Password"
                                             handleChange={(e) =>
                                                 setPassword(e.target.value)
@@ -95,6 +99,9 @@ function ResetPassword() {
                                             name="confirmPassword"
                                             type="password"
                                             value={confirmPassword}
+                                            style={{
+                                                border: showAlert && "1px solid #fa9b8a"
+                                            }}
                                             labelText="Confirm Password"
                                             placeholder="Confirm Password"
                                             handleChange={(e) =>

@@ -15,7 +15,6 @@ function ForgotPassword() {
     const [alertType, setAlertType] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
-    const [user, setUser] = useState("");
 
     async function forgotPassword(event) {
         setLoading(true);
@@ -78,6 +77,9 @@ function ForgotPassword() {
                                             name="email"
                                             value={email}
                                             className=""
+                                            style={{
+                                                border: showAlert && "1px solid #fa9b8a"
+                                            }}
                                             placeholder=""
                                             labelText="Email"
                                             handleChange={(e) => setEmail(e.target.value)}
@@ -88,7 +90,7 @@ function ForgotPassword() {
                                     <Button
                                         label={`${
                                             loading
-                                                ? "UPDATE PASSWORD..."
+                                                ? "UPDATING PASSWORD..."
                                                 : "UPDATE PASSWORD"
                                         }`}
                                         className="auth-button button"

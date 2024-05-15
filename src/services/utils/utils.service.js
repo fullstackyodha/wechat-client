@@ -1,6 +1,7 @@
 import { floor, random } from "lodash";
 import { avatarColors } from "./static.data";
 import { addUser, clearUser } from "@/redux_toolkit/reducers/users.reducers";
+import { meta } from "eslint-plugin-prettier";
 
 export class Utils {
     static avatarColor() {
@@ -48,5 +49,15 @@ export class Utils {
         deleteStorageUsername();
         deleteSessionPageReload();
         setLoggedIn(false);
+    }
+
+    static getAppEnvironment() {
+        const env = import.meta.env.VITE_REACT_APP_ENVIRONMENT;
+
+        if (env === "development") {
+            return "DEV";
+        } else if (env === "staging") {
+            return "STG";
+        }
     }
 }

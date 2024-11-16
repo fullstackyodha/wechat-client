@@ -104,4 +104,12 @@
             }
         }
     }
+
+    .no-suggestions {
+        margin-top: 200px;
+        color: var(--gray-1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

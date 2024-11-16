@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import "@/components/sidebar/Sidebar.scss";
 import { sideBarItems } from "@/services/utils/static.data";
 import { fontAwesomeIcons } from "@/services/utils/iconData";
-import { Link, useLocation } from "react-router-dom";
+import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
     const [sideBar, setSidebar] = useState([]);
+
     // Returns the current URL
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const { profile } = useSelector((state) => state.user);
 
     useEffect(() => {
         setSidebar(sideBarItems);
@@ -15,6 +20,14 @@ const Sidebar = () => {
 
     const checkUrl = (name) => {
         return location.pathname.includes(name.toLowerCase());
+    };
+
+    const navigateToPage = (name, url) => {
+        if (name == "Profile") {
+            url = `${url}/${profile?.username}?${createSearchParams({ id: profile?._id, uid: profile?.uId })}`;
+        }
+
+        navigate(url);
     };
 
     return (
@@ -25,7 +38,10 @@ const Sidebar = () => {
                         let iconName = item?.iconName;
 
                         return (
-                            <li key={item?.index}>
+                            <li
+                                key={item?.index}
+                                onClick={() => navigateToPage(item?.name, item?.url)}
+                            >
                                 <div
                                     data-testid="sidebar-list"
                                     className={`sidebar-link ${checkUrl(item?.name) ? "active" : ""}`}

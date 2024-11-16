@@ -1,6 +1,7 @@
+import { getUserSuggestions } from "@/redux_toolkit/api/suggestions";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { users: [], isLaoding: false };
+const initialState = { users: [], isLoading: false };
 
 const suggestionsSlice = createSlice({
     name: "Suggestions",
@@ -10,8 +11,23 @@ const suggestionsSlice = createSlice({
             const { isLoading, users } = action.payload;
 
             state.users = [...users];
-            state.isLaoding = isLoading;
+            state.isLoading = isLoading;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getUserSuggestions.pending, (state) => {
+            state.isLoading = true;
+        });
+
+        builder.addCase(getUserSuggestions.fulfilled, (state, action) => {
+            const { users } = action?.payload;
+            state.users = [...users];
+            state.isLoading = false;
+        });
+
+        builder.addCase(getUserSuggestions.rejected, (state) => {
+            state.isLoading = false;
+        });
     }
 });
 

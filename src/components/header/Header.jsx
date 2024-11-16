@@ -1,15 +1,34 @@
 import logo from "@/assets/images/wechatlogo.png";
 import userAvatar from "@/assets/images/userAvatar.webp";
 
-import { FaCaretDown, FaRegBell, FaRegEnvelope } from "react-icons/fa";
+import { FaCaretDown, FaCaretUp, FaRegBell, FaRegEnvelope } from "react-icons/fa";
 
 import "@/components/header/Header.scss";
 import Avatar from "../avatar/Avatar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Utils } from "@/services/utils/utils.service";
+import { useDetectOutsideClick } from "@/hooks/useDetectOutsideClick";
+import MessageSidebar from "@/components/message-sidebar/MessageSidebar";
+import { useSelector } from "react-redux";
+import Dropdown from "../dropdown/Dropdown";
 
 const Header = () => {
+    const { profile } = useSelector((state) => state.user);
+
     const [env, setEnv] = useState("");
+    const messageRef = useRef(null);
+    const notificationRef = useRef(null);
+    const settingsRef = useRef(null);
+
+    const { isActive: isMessageActive, setIsActive: setIsMessageActive } =
+        useDetectOutsideClick(messageRef, false);
+
+    const { isActive: isNotificationActive, setIsActive: setIsNotificationActive } =
+        useDetectOutsideClick(notificationRef, false);
+
+    const { isActive: isSettingsActive, setIsActive: setIsSettingsActive } =
+        useDetectOutsideClick(settingsRef, false);
+
     const backgroundColor = `${env === "DEV" ? "#50B5FF" : env === "STG" ? "#e9710f" : ""}`;
 
     useEffect(() => {
@@ -17,9 +36,28 @@ const Header = () => {
         setEnv(env);
     }, []);
 
+    const openChatPage = () => {};
+
+    const onMarkAsRead = () => {};
+
+    const onDeleteNotification = () => {};
+
+    const onLogout = () => {};
+
     return (
         <>
             <div className="header-nav-wrapper" data-testid="header-wrapper">
+                {/* MESSAGE SIDEBAR */}
+                {isMessageActive && (
+                    <div ref={messageRef}>
+                        <MessageSidebar
+                            profile={profile}
+                            messageCount={0}
+                            messageNotifications={[]}
+                            openChatPage={openChatPage}
+                        />
+                    </div>
+                )}
                 <div className="header-navbar">
                     <div className="header-image" data-testid="header-image">
                         <img src={logo} className="img-fluid" alt="" />
@@ -47,7 +85,14 @@ const Header = () => {
 
                     <ul className="header-nav">
                         {/* Bell Icon */}
-                        <li className="header-nav-item active-item">
+                        <li
+                            className="header-nav-item active-item"
+                            onClick={() => {
+                                setIsMessageActive(false);
+                                setIsSettingsActive(false);
+                                setIsNotificationActive((prev) => !prev);
+                            }}
+                        >
                             <span className="header-list-name">
                                 <FaRegBell className="header-list-icon" />
                                 <span
@@ -55,14 +100,33 @@ const Header = () => {
                                     data-testid="notification-dots"
                                 ></span>
                             </span>
-                            <ul className="dropdown-ul">
-                                <li className="dropdown-li"></li>
-                            </ul>
+                            {isNotificationActive && (
+                                <ul className="dropdown-ul" ref={notificationRef}>
+                                    <li className="dropdown-li">
+                                        <Dropdown
+                                            height={300}
+                                            style={{ right: "250px", top: "20px" }}
+                                            data={[]}
+                                            notificationCount={0}
+                                            title="Notifications"
+                                            onMarkAsRead={onMarkAsRead}
+                                            onDeleteNotification={onDeleteNotification}
+                                        />
+                                    </li>
+                                </ul>
+                            )}
                             &nbsp;
                         </li>
 
                         {/* Message Icon */}
-                        <li className="header-nav-item active-item">
+                        <li
+                            className="header-nav-item active-item"
+                            onClick={() => {
+                                setIsNotificationActive(false);
+                                setIsMessageActive(false);
+                                setIsMessageActive((prev) => !prev);
+                            }}
+                        >
                             <span className="header-list-name">
                                 <FaRegEnvelope className="header-list-icon" />
                                 <span
@@ -74,26 +138,48 @@ const Header = () => {
                         </li>
 
                         {/* Avatar Icon */}
-                        <li className="header-nav-item">
+                        <li
+                            className="header-nav-item"
+                            onClick={() => {
+                                setIsNotificationActive(false);
+                                setIsMessageActive(false);
+                                setIsSettingsActive((prev) => !prev);
+                            }}
+                        >
                             <span className="header-list-name profile-image">
                                 <Avatar
-                                    name="Harshal"
+                                    name={profile?.username}
                                     textColor="white"
-                                    bgColor="orange"
-                                    size="30"
+                                    bgColor={profile?.avatarColor}
+                                    size="40"
                                     round={true}
-                                    // avatarSrc={"https://place-hold.it"}
+                                    avatarSrc={profile?.profilePicture}
                                 />
                             </span>
 
                             <span className="header-list-name profile-name">
-                                Harshal
-                                <FaCaretDown className="header-list-icon caret" />
+                                {profile?.username}
+                                {!isSettingsActive ? (
+                                    <FaCaretDown className="header-list-icon caret" />
+                                ) : (
+                                    <FaCaretUp className="header-list-icon caret" />
+                                )}
                             </span>
 
-                            <ul className="dropdown-ul">
-                                <li className="dropdown-li"></li>
-                            </ul>
+                            {isSettingsActive && (
+                                <ul className="dropdown-ul" ref={settingsRef}>
+                                    <li className="dropdown-li">
+                                        <Dropdown
+                                            height={300}
+                                            style={{ right: "200px", top: "40px" }}
+                                            data={[]}
+                                            title="Settings"
+                                            onLogout={onLogout}
+                                            onNavigate={() => {}}
+                                        />
+                                    </li>
+                                </ul>
+                            )}
                         </li>
                     </ul>
                 </div>

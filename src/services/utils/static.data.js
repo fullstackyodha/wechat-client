@@ -10,23 +10,6 @@ import sad from "../../assets/reactions/sad.png";
 import wow from "../../assets/reactions/wow.png";
 import happy from "../../assets/reactions/happy.png";
 
-import {
-    FaBirthdayCake,
-    FaComments,
-    FaGlobe,
-    FaHeart,
-    FaImages,
-    FaKey,
-    FaLock,
-    FaNewspaper,
-    FaRegBell,
-    FaRegUser,
-    FaUser,
-    FaUserCheck,
-    FaUserPlus,
-    FaUsers
-} from "react-icons/fa";
-
 export const sideBarItems = [
     {
         index: 1,
@@ -100,18 +83,6 @@ export const feelingsList = [
         image: loved
     }
 ];
-
-export const fontAwesomeIcons = {
-    FaNewspaper: { iconName: "FaNewspaper", className: "icon" },
-    FaComments: { iconName: "FaComments", className: "icon" },
-    FaUsers: { iconName: "FaUsers", className: "icon" },
-    FaUserPlus: { iconName: "FaUserPlus", className: "icon" },
-    FaHeart: { iconName: "FaHeart", className: "icon" },
-    FaImages: { iconName: "FaImages", className: "icon" },
-    FaRegBell: { iconName: "FaRegBell", className: "icon" },
-    FaBirthdayCake: { iconName: "FaBirthdayCake", className: "icon" },
-    FaRegUser: { iconName: "FaNewspaper", className: "icon" }
-};
 
 export const privacyList = [
     {

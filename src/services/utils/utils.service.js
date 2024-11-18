@@ -1,6 +1,7 @@
 import { floor, random } from "lodash";
 import { avatarColors } from "./static.data";
 import { addUser, clearUser } from "@/redux_toolkit/reducers/users.reducers";
+import { meta } from "eslint-plugin-prettier";
 
 export class Utils {
     static avatarColor() {
@@ -44,9 +45,45 @@ export class Utils {
         deleteSessionPageReload,
         setLoggedIn
     }) {
-        dispatch(clearUser);
+        dispatch(clearUser());
         deleteStorageUsername();
         deleteSessionPageReload();
         setLoggedIn(false);
+    }
+
+    static getAppEnvironment() {
+        const env = import.meta.env.VITE_REACT_APP_ENVIRONMENT;
+
+        if (env === "development") {
+            return "DEV";
+        } else if (env === "staging") {
+            return "STG";
+        }
+    }
+
+    static generateString(length) {
+        const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = " ";
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    static mapSettingsDropdowItems(setSettings) {
+        const items = [];
+
+        const item = {
+            topText: "My Profile",
+            subText: "View Personal Profile."
+        };
+
+        items.push(item);
+
+        setSettings(items);
+
+        return items;
     }
 }

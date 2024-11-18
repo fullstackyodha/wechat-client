@@ -6,6 +6,18 @@ class UserService {
 
         return response;
     }
+
+    async logoutUser() {
+        const response = await axios.get("/signout");
+
+        return response;
+    }
+
+    async checkCurrentUser() {
+        const response = await axios.get("/currentUser");
+
+        return response;
+    }
 }
 
 export const userService = new UserService();

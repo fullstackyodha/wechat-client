@@ -13,14 +13,22 @@ export default defineConfig({
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
-            "@assets": "./src/assets/*",
-            "@colors": "./src/colors/*",
-            "@components": "./src/components/*",
-            "@hooks": "./src/hooks/*",
-            "@pages": "./src/pages/*",
-            "@mocks": "./src/mocks/*",
-            "@redux": "./src/redux_toolkit/*",
-            "@services": "./src/services/*"
+            "@assets": path.resolve(__dirname, "./src/assets"),
+            "@colors": path.resolve(__dirname, "./src/colors"),
+            "@components": path.resolve(__dirname, "./src/components"),
+            "@hooks": path.resolve(__dirname, "./src/hooks"),
+            "@pages": path.resolve(__dirname, "./src/pages"),
+            "@mocks": path.resolve(__dirname, "./src/mocks"),
+            "@redux": path.resolve(__dirname, "./src/redux_toolkit"),
+            "@services": path.resolve(__dirname, "./src/services")
+        }
+    },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `@use "@/colors/variables.scss" as *;`,
+                includePaths: [path.resolve(__dirname, "src")]
+            }
         }
     },
     test: {

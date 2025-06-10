@@ -10,10 +10,10 @@ class SocketService {
             secure: true
         });
 
-        this.socketConnectoinEvent();
+        this.socketConnectionEvent();
     }
 
-    socketConnectoinEvent() {
+    socketConnectionEvent() {
         this.socket.on("connect", () => {
             console.log("Connected to the socket server");
         });

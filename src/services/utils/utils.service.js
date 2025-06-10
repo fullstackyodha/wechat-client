@@ -2,6 +2,10 @@ import { floor, random } from "lodash";
 import { avatarColors } from "./static.data";
 import { addUser, clearUser } from "@/redux_toolkit/reducers/users.reducers";
 import { meta } from "eslint-plugin-prettier";
+import {
+    addNotification,
+    clearNotification
+} from "@/redux_toolkit/reducers/notifications/notifications.reducers";
 
 export class Utils {
     static avatarColor() {
@@ -46,9 +50,18 @@ export class Utils {
         setLoggedIn
     }) {
         dispatch(clearUser());
+        dispatch(clearNotification());
         deleteStorageUsername();
         deleteSessionPageReload();
         setLoggedIn(false);
+    }
+
+    static dispatchNotification(message, type, dispatch) {
+        dispatch(addNotification({ message, type }));
+    }
+
+    static dispatchClearNotification(dispatch) {
+        dispatch(clearNotification());
     }
 
     static getAppEnvironment() {

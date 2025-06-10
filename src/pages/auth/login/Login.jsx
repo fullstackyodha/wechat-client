@@ -40,7 +40,7 @@ function Login() {
                 username,
                 password
             });
-            console.log(response.data.data);
+            // console.log(response.data.data);
 
             // SET LOGGED IN TO TRUE IN LOCAL STORAGE
             setLoggedIn(keepLoggedIn);

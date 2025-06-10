@@ -21,7 +21,7 @@ const suggestionsSlice = createSlice({
 
         builder.addCase(getUserSuggestions.fulfilled, (state, action) => {
             const { users } = action?.payload;
-            state.users = [...users];
+            state.users = users && [...users];
             state.isLoading = false;
         });
 

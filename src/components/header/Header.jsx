@@ -65,18 +65,24 @@ const Header = () => {
     const onLogout = async () => {
         try {
             setLoggedIn(false);
-            Utils.clearStore({
-                dispatch,
-                deleteSessionPageReload,
-                deleteStorageUsername,
-                setLoggedIn
-            });
+
+            Utils.dispatchNotification("You have been logged out.", "success", dispatch);
+
+            setTimeout(() => {
+                Utils.clearStore({
+                    dispatch,
+                    deleteSessionPageReload,
+                    deleteStorageUsername,
+                    setLoggedIn
+                });
+            }, 2000);
 
             await userService.logoutUser();
 
             navigate("/");
         } catch (err) {
             console.log(err);
+            Utils.dispatchNotification(err.response?.data?.message, "error", dispatch);
         }
     };
 

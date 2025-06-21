@@ -14,6 +14,7 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import Error from "./pages/error/Error";
 import { Suspense } from "react";
 import StreamsSkeleton from "./pages/social/streams/StreamsSkeleton";
+import NotificationSkeleton from "./pages/social/notifications/NotificationSkeleton";
 
 const AppRouter = () => {
     // Returns the element of the route that matched the current location
@@ -54,7 +55,14 @@ const AppRouter = () => {
                 { path: "following", element: <Followings /> },
                 { path: "followers", element: <Followers /> },
                 { path: "photos", element: <Photos /> },
-                { path: "notifications", element: <Notifications /> },
+                {
+                    path: "notifications",
+                    element: (
+                        <Suspense fallback={<NotificationSkeleton />}>
+                            <Notifications />
+                        </Suspense>
+                    )
+                },
                 { path: "profile/:username", element: <Profile /> }
             ]
         },

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@/components/avatar/Avatar";
 import { FaCircle, FaRegCircle, FaRegTrashAlt } from "react-icons/fa";
 import { Utils } from "@/services/utils/utils.service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { notificationService } from "@/services/api/notifications/notifications.service";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import NotificationPreview from "@/components/dialog/NotificationPreview";
+import { NotificationUtils } from "@/services/utils/notifications-utils.service";
+import { timeAgo } from "@/services/utils/timeago.utils";
 
 const Notifications = () => {
+    const { profile } = useSelector((state) => state.user);
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -33,9 +36,41 @@ const Notifications = () => {
         }
     };
 
+    const markAsRead = async (notification) => {
+        try {
+            NotificationUtils.markMessageAsRead(
+                notification?._id,
+                notification,
+                setNotificationDialogContent
+            );
+        } catch (error) {
+            Utils.dispatchNotification(error.response.data.message, "error", dispatch);
+        }
+    };
+
+    const deleteNotification = async (event, messageId) => {
+        event.stopPropagation();
+
+        try {
+            const response = await notificationService.deleteNotification(messageId);
+            Utils.dispatchNotification(response.data.message, "success", dispatch);
+        } catch (error) {
+            Utils.dispatchNotification(error.response.data.message, "error", dispatch);
+        }
+    };
+
     useEffectOnce(() => {
         getUserNotifications();
     });
+
+    useEffect(() => {
+        NotificationUtils.socketIONotification(
+            profile,
+            notifications,
+            setNotifications,
+            "notificationPage"
+        );
+    }, [profile, notifications]);
 
     return (
         <>
@@ -72,6 +107,7 @@ const Notifications = () => {
                                 className="notification-box"
                                 data-testid="notification-box"
                                 key={index}
+                                onClick={() => markAsRead(notification)}
                             >
                                 <div className="notification-box-sub-card">
                                     <div className="notification-box-sub-card-media">
@@ -94,6 +130,12 @@ const Notifications = () => {
                                                 <small
                                                     data-testid="subtitle"
                                                     className="subtitle"
+                                                    onClick={(event) =>
+                                                        deleteNotification(
+                                                            event,
+                                                            notification?._id
+                                                        )
+                                                    }
                                                 >
                                                     <FaRegTrashAlt className="trash" />
                                                 </small>
@@ -106,7 +148,11 @@ const Notifications = () => {
                                                         <FaRegCircle className="icon" />
                                                     )}
                                                 </small>
-                                                <p className="subtext">1 hr ago</p>
+                                                <p className="subtext">
+                                                    {timeAgo.transform(
+                                                        notification?.createdAt
+                                                    )}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

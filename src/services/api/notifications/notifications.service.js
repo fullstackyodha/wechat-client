@@ -10,6 +10,11 @@ class NotificationsService {
         const response = await axios.put(`/notification/${messageId}`);
         return response;
     }
+
+    async deleteNotification(messageId) {
+        const response = await axios.delete(`/notification/${messageId}`);
+        return response;
+    }
 }
 
 export const notificationService = new NotificationsService();

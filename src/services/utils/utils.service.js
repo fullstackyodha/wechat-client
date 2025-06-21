@@ -1,7 +1,6 @@
 import { floor, random } from "lodash";
 import { avatarColors } from "./static.data";
 import { addUser, clearUser } from "@/redux_toolkit/reducers/users.reducers";
-import { meta } from "eslint-plugin-prettier";
 import {
     addNotification,
     clearNotification
@@ -98,5 +97,14 @@ export class Utils {
         setSettings(items);
 
         return items;
+    }
+
+    static appImageUrl(version, id) {
+        if (typeof version === "string" && typeof id === "string") {
+            version = version.replace(/['"]+/g, "");
+            id = id.replace(/['"]+/g, "");
+        }
+
+        return `https://res.cloudinary.com/dfqoja2ob/image/upload/v${version}/${id}`;
     }
 }

@@ -1,3 +1,4 @@
+import PostForm from "@/components/posts/post-form/postForm";
 import Suggestions from "@/components/suggestions/Suggestions";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import "@/pages/social/streams/Streams.scss";
@@ -21,7 +22,7 @@ function Streams() {
             <div className="streams-content">
                 {/* POSTS */}
                 <div className="streams-post" ref={bodyRef}>
-                    <div>Form</div>
+                    <PostForm />
 
                     <div>Items</div>
 
